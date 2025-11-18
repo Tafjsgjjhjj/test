@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Information Form</title>
+
+  <style>
+    :root {
+      --primary: #0b8f35;
+      --bg-dark: #064d25;
+      --yellow: #ffd700;
+      --error: #ff4d4d;
+      --success: #4CAF50;
+    }
+
+    body {
+      background: var(--bg-dark);
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 300px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .header img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input:not([type="radio"]) {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #777;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .error-msg {
+      color: var(--error);
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .btn-box {
+       display:flex;
+      gap:140px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 10px 25px;
+      border: 0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #066622;
+    }
+
+    input.invalid {
+      border-color: var(--error);
+    }
+
+    input.valid {
+      border-color: var(--success);
+    }
+
+    footer {
+      text-align: center;
+      color: white;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <img src="images/your-logo.png" alt="Logo">
+    <h2>Personal Information</h2>
+  </div>
+
+  <form id="personalForm" action="images/page2.html" method="get">
+
+    <div class="form-group">
+      <label>Age</label>
+      <input type="number" required>
+      <div class="error-msg" id="ageError">Enter a valid age it does not  match the birthdate</div>
+    </div>
+
+    <div class="forms">
+      <label>Gender</label>
+      <div class="form-group">
+        <label><input type="radio" name="gender" value="male"> Male</label>
+        <label><input type="radio" name="gender" value="female"> Female</label>
+        <label><input type="radio" name="gender" value="other"> Other</label>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label>Birthdate</label>
+      <input type="date" required>
+      <div class="error-msg" id="birthError"></div>
+    </div>
+    
+    <div class="form-group">
+      <label>Birthplace</label>
+      <input type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Upload your photo 2x2 </label>
+      <input type="file">
+    </div>
+
+    <div class="btn-box">
+        <button class="btn" type="button" onclick="window.history.back()">Back</button>
+      <button class="btn" type="submit">Next</button>
+    </div>
+
+  </form>
+</div>
+
+<footer>
+  <p><i>© All Rights Reserved - Student Information System</i></p>
+  <p><b>Ranido, Ampo, Teoxon</b></p>
+</footer>
+
+<script>
+document.getElementById("personalForm").addEventListener("submit", function(event){
+  event.preventDefault(); // prevent default submit
+
+  let isValid = true;
+
+  const ageInput = this.querySelector("input[type='number']");
+  const birthInput = this.querySelector("input[type='date']");
+  const ageError = document.getElementById("ageError");
+
+  // check if age > 200
+  const ageValue = parseInt(ageInput.value.trim());
+  if (ageValue > 200 || ageValue <= 0) {
+    ageInput.classList.add("invalid");
+    ageInput.classList.remove("valid");
+    ageError.style.display = "block";
+    isValid = false;
+  } else {
+    // check if birthdate matches age
+    const birthDate = new Date(birthInput.value);
+    const today = new Date();
+    let diff = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      diff--;
+    }
+
+    if (diff !== ageValue) {
+      ageInput.classList.add("invalid");
+      birthInput.classList.add("invalid");
+      ageError.style.display = "block";
+      isValid = false;
+    } else {
+      ageInput.classList.remove("invalid");
+      ageInput.classList.add("valid");
+      birthInput.classList.remove("invalid");
+      birthInput.classList.add("valid");
+      ageError.style.display = "none";
+    }
+  }
+
+  if(isValid) {
+    this.submit();
+  }
+});
+</script>
+
+</body>
+</html>

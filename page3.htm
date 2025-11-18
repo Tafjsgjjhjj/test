@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Information Form</title>
+
+  <style>
+    :root {
+      --primary: #0b8f35;
+      --bg-dark: #064d25;
+      --yellow: #ffd700;
+      --error: #ff4d4d;
+      --success: #4CAF50;
+    }
+
+    body {
+      background: var(--bg-dark);
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 300px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .header img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #777;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    /* FIXED CITY + STATE LAYOUT */
+    .city-state-row {
+      display: flex;
+      gap: 10px; /* spacing between the two fields */
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .city-state-row .field {
+      flex: 1; /* equal width */
+      display: flex;
+      flex-direction: column; /* label on top, input below */
+    }
+
+    .btn-box {
+      display:flex;
+      gap:140px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 10px 25px;
+      border: 0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #066622;
+    }
+
+    input.invalid {
+      border-color: var(--error);
+    }
+
+    input.valid {
+      border-color: var(--success);
+    }
+
+    footer {
+      text-align: center;
+      color: white;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <img src="images/your-logo.png" alt="Logo">
+    <h2>Contact Information </h2>
+  </div>
+
+  <form id="addressForm" action="page4.htm" method="get">
+
+    <div class="form-group">
+      <label>Street Address</label>
+      <input type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Street Address Line 2</label>
+      <input type="text" required>
+    </div>
+
+    <div class="city-state-row">
+      <div class="field">
+        <label>City</label>
+        <input type="text" required>
+      </div>
+      <div class="field">
+        <label>State/Province</label>
+        <input type="text" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Postal/Zip Code</label>
+      <input type="number" required>
+    </div>
+
+    <div class="btn-box">
+        <button class="btn" type="button" onclick="window.history.back()">Back</button>
+      <button class="btn" type="submit">Next</button>
+    </div>
+
+  </form>
+</div>
+
+<footer>
+  <p><i>© All Rights Reserved - Student Information System</i></p>
+</footer>
+
+<script>
+document.getElementById("addressForm").addEventListener("submit", function(event) {
+  event.preventDefault(); // stop form submit
+
+  let isValid = true;
+  const inputs = this.querySelectorAll("input");
+
+  inputs.forEach(input => {
+    if (input.value.trim() === "") {
+      input.classList.add("invalid");
+      input.classList.remove("valid");
+      isValid = false;
+    } else {
+      input.classList.remove("invalid");
+      input.classList.add("valid");
+    }
+  });
+
+  if (isValid) {
+    this.submit(); // submit if all inputs are filled
+  }
+});
+</script>
+
+</body>
+</html>
